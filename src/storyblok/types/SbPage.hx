@@ -6,5 +6,11 @@ package storyblok.types;
  */
 typedef SbPage<DataType> =
 {
-	results:Array<DataType>
+	results:Array<DataType>,
+	
+	totalItems:Int,
+	totalPages:Int,
+	pageSize:Int,
+	page:Int,
+	
 }

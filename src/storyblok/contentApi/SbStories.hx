@@ -16,9 +16,14 @@ class SbStories
 		
 	}
 	
-	static public function list(?options:StoriesOptions) : Promise<SbPage<SbStory>>
+	static public function list(?options:SbStoriesOptions) : Promise<SbPage<SbStory>>
 	{
 		return untyped SbHttp.get('/v1/cdn/stories', options, 'stories', PAGE);
+	}
+	
+	static public function listAll(?options:SbStoriesOptions) : Promise<SbPage<SbStory>>
+	{
+		return untyped SbHttp.getAllPages('/v1/cdn/stories', options, 'stories');
 	}
 	
 	static public function get(idOrPath:String, ?options:StoryOptions, ?filters:Array<SbFilter>) : Promise<SbStory>
@@ -35,7 +40,7 @@ class SbStories
 }
 
 @:noCompletion
-typedef StoriesOptions =
+typedef SbStoriesOptions =
 {
 	> SbPageOptions,
 	?with_tag: Array<String>,
@@ -70,20 +75,25 @@ typedef StoryOptions =
 
 typedef SbStory =
 {
+	uuid: SbUUID,
 	id: Int,
 	parent_id: Int,
 	
-	name: String,
 	created_at: SbTimestamp,
-	published_at: SbTimestamp,	
+	published_at: SbTimestamp,
+	first_published_at: SbTimestamp,
+	sort_by_date: Null<SbTimestamp>,
+	
+	name: String,
 	/*alternates: Array<??>,*/
-	uuid: SbUUID,
+	/*release_id: ??,*/
 	content: SbStoryContent,
 	slug: String,
 	full_slug: String,
-	//sort_by_date: null,
 	tag_list: Array<String>,
 	is_startpage: Bool,
+	position: Int,
+	lang: String,
 	//meta_data: null,
 	group_id: SbUUID
 }

@@ -15,13 +15,13 @@ class SbSpaces
 		
 	}
 	
-	static public function current(?options:SbOptions) : Promise<Space>
+	static public function current(?options:SbOptions) : Promise<SbSpace>
 	{
 		return untyped SbHttp.get('/v1/cdn/spaces/me', options, 'space');
 	}
 }
 
-typedef Space =
+typedef SbSpace =
 {
 	name: String,
     domain: String,

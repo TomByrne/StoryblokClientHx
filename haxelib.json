@@ -9,6 +9,7 @@
   "contributors": ["tbyrne"],
   "classPath":"src",
   "dependencies": {
-	  "promhx": "1.1.0"
+	  "promhx": "1.1.0",
+	  "tink_http": "0.8.2"
   }
 }

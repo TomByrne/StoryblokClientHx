@@ -20,6 +20,11 @@ class SbLinks
 	{
 		return untyped SbHttp.get('/v1/cdn/links', options, 'links', ID_MAP);
 	}
+	
+	static public function get(id:String, ?options:SbOptions, ?filters:Array<SbFilter>) : Promise<SbLink>
+	{
+		return untyped SbHttp.get('/v1/cdn/links/${id}', options, 'link');
+	}
 }
 
 typedef SbLinksOptions =

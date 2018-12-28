@@ -12,6 +12,44 @@ import storyblok.types.SbPage;
 class SbHttp 
 {
 	static public var defaultOptions:Dynamic = {};
+	
+	static public function getAllPages(endpoint:String, ?options:SbPageOptions, ?resProp:String) : Promise<Dynamic>
+	{
+		var deferred = new Deferred();
+		
+		var all:SbPage<Dynamic> = {results:[], totalItems:0, totalPages:1, pageSize:0, page:0};
+		
+		options.page = 0;
+		options.per_page = 100;
+		
+		get(endpoint, options, resProp, SbResposeType.PAGE)
+		.then(onPageLoad.bind(_, endpoint, options, resProp, all, deferred))
+		.catchError(onPageError.bind(_, deferred));
+		
+		return new Promise(deferred);
+	}
+	
+	static function onPageError(err:String, deferred:Deferred<Dynamic>) 
+	{
+		deferred.throwError(err);
+	}
+	static function onPageLoad(res:SbPage<Dynamic>, endpoint:String, options:SbPageOptions, resProp:String, all:SbPage<Dynamic>, deferred:Deferred<Dynamic>) 
+	{
+		if (options.page == 0){
+			all.totalItems = res.totalItems;
+			all.pageSize = res.totalItems;
+		}
+		all.results = all.results.concat(res.results);
+		
+		if (all.results.length == all.totalItems){
+			deferred.resolve(all);
+		}else{
+			options.page++;
+			get(endpoint, options, resProp, SbResposeType.PAGE)
+				.then(onPageLoad.bind(_, endpoint, options, resProp, all, deferred))
+				.catchError(onPageError.bind(_, deferred));
+		}
+	}
 
 	static public function get(endpoint:String, ?options:SbOptions, ?resProp:String, ?type:SbResposeType) : Promise<Dynamic>
 	{
@@ -26,37 +64,47 @@ class SbHttp
 		}
 		
 		var url = buildUrl(endpoint, options);
-		
-		var http = new Http(url);
-		for (field in Reflect.fields(options)){
-			var value:Dynamic = Reflect.field(options, field);
-			if (Std.is(value, Bool)){
-				value = (value == true ? '1' : '0');
-			}else if (isArray(value)){
-				var arr:Array<Dynamic> = untyped value;
-				value = value.join(',');
-			}
-			http.setParameter(field, value);
-		}
-		
-		http.onData = function(res:String){
-			var data:{} = Json.parse(res);
-			if (resProp != null) data = Reflect.field(data, resProp);
-			
-			switch(type){
-				case SbResposeType.OBJECT | SbResposeType.ID_MAP: // ignore
-				case SbResposeType.PAGE:
-					var page:SbPage<Dynamic> = {
-						results: untyped data
-					}
-					data = page;
-			}
-			deferred.resolve(data);
-		}
-		http.onError = function(err:String){
-			deferred.throwError(err);
-		}
-		http.request();
+		var query:tink.url.Query = options;
+		url += "?" + query.toString();
+		tink.http.Fetch.fetch(url).all()
+		.handle(function(o) switch o {
+			case Success(res):
+				var body = res.body.toString();
+				var data:{} = Json.parse(body);
+				if (resProp != null) data = Reflect.field(data, resProp);
+				
+				switch(type){
+					case SbResposeType.OBJECT | SbResposeType.ID_MAP: // ignore
+					case SbResposeType.PAGE:
+						var totalStr:Null<String> = res.header.get('total')[0];
+						var totalItems:Int;
+						if (totalStr != null){
+							totalItems = Std.parseInt(totalStr);
+						}else{
+							totalItems = untyped data.length;
+						}
+						
+						var page:Null<Int> = Reflect.field(options, 'page');
+						if (page == null) page = 0;
+						
+						var pageSize:Null<Int> = Reflect.field(options, 'per_page');
+						if (pageSize == null) pageSize = 25;
+						
+						var page:SbPage<Dynamic> = {
+							results: untyped data,
+							
+							totalItems: totalItems,
+							totalPages: Math.ceil(totalItems / pageSize),
+							pageSize: pageSize,
+							page: page,
+						}
+						data = page;
+				}
+				deferred.resolve(data);
+				
+			case Failure(e):
+				deferred.throwError(e);
+		});
 		
 		return new Promise(deferred);
 	}
