@@ -85,7 +85,7 @@ typedef SbStory =
 	sort_by_date: Null<SbTimestamp>,
 	
 	name: String,
-	/*alternates: Array<??>,*/
+	alternates: Array<SbStoryAlternate>,
 	/*release_id: ??,*/
 	content: SbStoryContent,
 	slug: String,
@@ -99,11 +99,28 @@ typedef SbStory =
 }
 
 @:noCompletion
-typedef SbStoryContent =
+typedef SbStoryAlternate =
 {
-	_uid:SbUUID,
-	//body:Array<??>,
-	author:SbUUID,
-	headline:String,
-	component:String,
+	id: Int,
+	parent_id: Int,
+	name: String,
+	slug: String,
+	full_slug: String,
+	is_folder: Bool,
+}
+
+@:noCompletion
+abstract SbStoryContent(Dynamic) to Dynamic
+{
+	public var _uid(get, never):SbUUID;
+	function get__uid():SbUUID return this._uid;
+	
+	public var component(get, never):String;
+	function get_component():String return this.component;
+	
+	public function get(name:String) : Dynamic
+	{
+		return Reflect.field(this, name);
+	}
+	
 }
