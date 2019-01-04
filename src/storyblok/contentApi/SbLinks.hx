@@ -2,7 +2,7 @@ package storyblok.contentApi;
 
 import promhx.*;
 import storyblok.net.SbHttp;
-import storyblok.net.SbOptions;
+import storyblok.options.SbOptions;
 import storyblok.types.*;
 
 /**
@@ -21,7 +21,7 @@ class SbLinks
 		return untyped SbHttp.get('/v1/cdn/links', options, 'links', ID_MAP);
 	}
 	
-	static public function get(id:String, ?options:SbOptions, ?filters:Array<SbFilter>) : Promise<SbLink>
+	static public function get(id:String, ?options:SbOptions) : Promise<SbLink>
 	{
 		return untyped SbHttp.get('/v1/cdn/links/${id}', options, 'link');
 	}
@@ -32,10 +32,4 @@ typedef SbLinksOptions =
 	> SbOptions,
 	?starts_with:String,
 	?version: SbVersion
-}
-
-typedef SbLink =
-{
-	name: String,
-	taggings_count: Int,
 }

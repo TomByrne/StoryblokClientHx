@@ -2,8 +2,8 @@ package storyblok.net;
 import promhx.*;
 import haxe.Http;
 import haxe.Json;
-import storyblok.net.SbOptions;
-import storyblok.types.SbPage;
+import storyblok.options.*;
+import storyblok.types.*;
 
 /**
  * ...

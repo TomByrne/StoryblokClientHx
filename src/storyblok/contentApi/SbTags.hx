@@ -2,7 +2,7 @@ package storyblok.contentApi;
 
 import promhx.*;
 import storyblok.net.SbHttp;
-import storyblok.net.SbOptions;
+import storyblok.options.SbOptions;
 import storyblok.types.*;
 
 /**
@@ -26,10 +26,4 @@ typedef SbTagsOptions =
 {
 	> SbOptions,
 	?starts_with:String
-}
-
-typedef SbTag =
-{
-	name: String,
-	taggings_count: Int,
 }

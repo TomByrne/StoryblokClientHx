@@ -2,7 +2,7 @@ package storyblok.contentApi;
 
 import promhx.*;
 import storyblok.net.SbHttp;
-import storyblok.net.SbOptions;
+import storyblok.options.SbOptions;
 import storyblok.types.*;
 
 /**
@@ -27,11 +27,4 @@ typedef SbDatasourcesOptions =
 	> SbOptions,
 	?datasource:String,
 	?dimension:String,
-}
-
-typedef SbDatasource =
-{
-	name: String,
-	value: String,
-	dimension_value: String,
 }

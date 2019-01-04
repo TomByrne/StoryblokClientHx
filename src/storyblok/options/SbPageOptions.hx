@@ -1,13 +1,9 @@
-package storyblok.net;
+package storyblok.options;
 
 /**
  * ...
  * @author Thomas Byrne
  */
-typedef SbOptions =
-{
-	?token:String,
-}
 typedef SbPageOptions =
 {
 	> SbOptions,

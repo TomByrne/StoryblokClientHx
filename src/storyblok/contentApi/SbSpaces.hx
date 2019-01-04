@@ -2,7 +2,8 @@ package storyblok.contentApi;
 
 import promhx.*;
 import storyblok.net.SbHttp;
-import storyblok.net.SbOptions;
+import storyblok.options.SbOptions;
+import storyblok.types.SbSpace;
 
 /**
  * ...
@@ -21,9 +22,3 @@ class SbSpaces
 	}
 }
 
-typedef SbSpace =
-{
-	name: String,
-    domain: String,
-    version: Float,
-}
