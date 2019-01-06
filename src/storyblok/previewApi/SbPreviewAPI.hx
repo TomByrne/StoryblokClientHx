@@ -2,6 +2,7 @@ package storyblok.previewApi;
 
 import storyblok.types.*;
 import storyblok.options.*;
+import haxe.extern.EitherType;
 
 /**
  * ...
@@ -13,6 +14,7 @@ import storyblok.options.*;
 extern class SbPreviewAPI 
 {
 
+	public static function on(event:EitherType<SbBridgeEvents, Array<SbBridgeEvents>>, handler:SbBridgeEvent->Void) : Void;
 	public static function init(config:{accessToken:String}) : Void;
 	public static function pingEditor(success:Void->Void) : Void;
 	public static function isInEditor() : Bool;
@@ -25,4 +27,21 @@ typedef SbPreviewStoryOptions =
 {
 	> SbStoryOptions,
 	slug:String
+}
+
+typedef SbBridgeEvent =
+{
+	?event:String, // For 'customEvent'
+	?slugChanged:Bool,
+	?story:SbStory,
+}
+
+@:enum abstract SbBridgeEvents(String)
+{
+	var input = 'input';	//after a user changes the value of a field
+	var change = 'change';	//after the user saves the content
+	var published = 'published';	//after the user clicks publish
+	var unpublished = 'unpublished';	//after the user clicks unpublish
+	var enterEditmode = 'enterEditmode';	//after the editor has been initialized in the editmode
+	var customEvent = 'customEvent';	//custom event used by third party plugins
 }
