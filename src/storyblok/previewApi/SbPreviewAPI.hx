@@ -34,6 +34,8 @@ typedef SbBridgeEvent =
 	?event:String, // For 'customEvent'
 	?slugChanged:Bool,
 	?story:SbStory,
+	?storyId:String,
+	?reload:Bool,
 }
 
 @:enum abstract SbBridgeEvents(String)

@@ -6,6 +6,7 @@ import js.html.Console;
 import js.html.Element;
 import js.Browser;
 import storyblok.previewApi.SbPreviewAPI;
+import storyblok.types.SbStory;
 
 /**
  * ...
@@ -15,9 +16,9 @@ class SbPreviewBridge
 {
 	static public var settings:SbPreviewSettings;
 	
-	static var complete:Void->Void;
+	static var complete:String->Void;
 
-	public static function install(div:Element, token:String, ?complete:Void->Void) : SbPreviewSettings
+	public static function install(div:Element, token:String, ?complete:String->Void) : SbPreviewSettings
 	{
 		settings = getSettings();
 		if (settings == null){
@@ -40,14 +41,19 @@ class SbPreviewBridge
 	static private function checkReady() 
 	{
 		try{
-			SbPreviewAPI.pingEditor(function(){
-				if (complete == null) return;
-				
-				complete();
-				complete = null;
-				EnterFrame.remove(checkReady);
-			});
-		}catch(e:Dynamic){}
+			SbPreviewAPI.on([SbBridgeEvents.enterEditmode], onInitialContent);
+		}catch (e:Dynamic){
+			// API not loaded yet
+			return;
+		}
+		
+		EnterFrame.remove(checkReady);
+	}
+	
+	static private function onInitialContent(event:SbBridgeEvent) 
+	{
+		complete(event.storyId);
+		complete = null;
 	}
 	
 	/*
