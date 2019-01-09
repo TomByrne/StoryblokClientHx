@@ -1,6 +1,6 @@
 {
   "name": "StoryblokClient",
-  "url": "http://github.com/TomByrne/StoryblokClient",
+  "url": "http://github.com/TomByrne/StoryblokClientHx",
   "license": "MIT",
   "tags": ["restful", "api"],
   "description": "Storyblok API client in pure Haxe (via REST API)",
