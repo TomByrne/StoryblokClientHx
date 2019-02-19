@@ -64,8 +64,6 @@ class SbHttp
 		}
 		
 		var url = buildUrl(endpoint, options);
-		var query:tink.url.Query = options;
-		url += "?" + query.toString();
 		tink.http.Fetch.fetch(url).all()
 		.handle(function(o) switch o {
 			case Success(res):
@@ -111,7 +109,26 @@ class SbHttp
 	
 	static function buildUrl(endpoint:String, options:SbOptions) : String
 	{
-		return 'https://api.storyblok.com${endpoint}';
+		var url:String = 'https://api.storyblok.com${endpoint}';
+		if(options != null)
+		{
+			var query:String = '';
+			for(field in Reflect.fields(options))
+			{
+				var value:Dynamic = Reflect.field(options, field);
+				if(query.length > 0) query += '&';
+				query += field + '=' + switch(Type.typeof(value))
+				{
+					case TBool: (value ? '1' : '0');
+					default: Std.string(value);
+				}
+			}
+			if(query.length > 0)
+			{
+				url += '?' + query;
+			}
+		}
+		return url;
 	}
 	
 	

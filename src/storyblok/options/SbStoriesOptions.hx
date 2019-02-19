@@ -37,6 +37,7 @@ typedef SbStoriesOptionsBase =
 	?search_term:String,
 	?resolve_links:Bool,
 	?resolve_relations:Array<String>,
+	?resolve_assets:Bool,
 }
 
 @:enum abstract SBFilterTermsOp(String)
