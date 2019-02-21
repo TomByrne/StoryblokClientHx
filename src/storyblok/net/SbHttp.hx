@@ -19,7 +19,7 @@ class SbHttp
 		
 		var all:SbPage<Dynamic> = {results:[], totalItems:0, totalPages:1, pageSize:0, page:0};
 		
-		options.page = 0;
+		options.page = 1;
 		options.per_page = 100;
 		
 		get(endpoint, options, resProp, SbResposeType.PAGE)
@@ -39,6 +39,7 @@ class SbHttp
 			all.totalItems = res.totalItems;
 			all.pageSize = res.totalItems;
 		}
+		all.totalItems = res.totalItems;
 		all.results = all.results.concat(res.results);
 		
 		if (all.results.length == all.totalItems){
