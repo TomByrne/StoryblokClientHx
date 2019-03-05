@@ -3,7 +3,7 @@
   "url": "http://github.com/TomByrne/StoryblokClientHx",
   "license": "MIT",
   "tags": ["restful", "api"],
-  "description": "Storyblok API client in pure Haxe (via REST API)",
+  "description": "Storyblok API client in pure Haxe (via REST API). Only tested on JS target at this point.",
   "version": "0.0.1",
   "releasenote": "",
   "contributors": ["tbyrne"],
