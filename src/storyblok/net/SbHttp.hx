@@ -111,9 +111,9 @@ class SbHttp
 	static function buildUrl(endpoint:String, options:SbOptions) : String
 	{
 		var url:String = 'https://api.storyblok.com${endpoint}';
+		var query:String = '';
 		if(options != null)
 		{
-			var query:String = '';
 			for(field in Reflect.fields(options))
 			{
 				var value:Dynamic = Reflect.field(options, field);
@@ -124,11 +124,12 @@ class SbHttp
 					default: Std.string(value);
 				}
 			}
-			if(query.length > 0)
-			{
-				url += '?' + query;
-			}
 		}
+
+		// Storyblok isn't setting the correct cache headers, so we need to manually bust the cache
+		query += (query.length > 0 ? '&' : '') + 'cache_bust=' + Math.round(Math.random() * 100000);
+
+		url += '?' + query;
 		return url;
 	}
 	
