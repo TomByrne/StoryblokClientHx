@@ -1,7 +1,6 @@
 package storyblok.utils;
 
 import haxe.DynamicAccess;
-import imagsyd.time.EnterFrame;
 import js.html.Console;
 import js.html.Element;
 import js.Browser;
@@ -32,7 +31,7 @@ class SbPreviewBridge
 		
 		if (complete != null){
 			SbPreviewBridge.complete = complete;
-			EnterFrame.add(checkReady);
+			scriptTag.onload = checkReady;
 		}
 		
 		return settings;
@@ -43,11 +42,8 @@ class SbPreviewBridge
 		try{
 			SbPreviewAPI.on([SbBridgeEvents.enterEditmode], onInitialContent);
 		}catch (e:Dynamic){
-			// API not loaded yet
-			return;
+			trace('Warning: failed to find storyblok js library');
 		}
-		
-		EnterFrame.remove(checkReady);
 	}
 	
 	static private function onInitialContent(event:SbBridgeEvent) 
