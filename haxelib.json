@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": ["restful", "api"],
   "description": "Storyblok API client in pure Haxe (via REST API). Only tested on JS target at this point.",
-  "version": "0.0.3",
-  "releasenote": "Cleaned up load 'storyblok-latest.js' delay",
+  "version": "0.1.0",
+  "releasenote": "Added Travis builds",
   "contributors": ["tbyrne"],
   "classPath":"src",
   "dependencies": {

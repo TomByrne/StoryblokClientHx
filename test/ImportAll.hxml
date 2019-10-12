@@ -1,0 +1,7 @@
+-cp test
+-js ./bin/ImportAll.js
+--macro include('storyblok', true)
+-lib promhx:1.1.0
+-lib tink_http:0.8.2
+-lib StoryblokClient
+-main ImportAll
