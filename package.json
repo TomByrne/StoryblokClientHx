@@ -1,6 +1,6 @@
 {
-	"name": "starling-text-display",
-	"version": "0.1.0",
+	"name": "StoryblokClient",
+	"version": "0.2.0",
 	"homepage": "http://github.com/TomByrne/StoryblokClientHx",
 	"repository": {
 		"type" : "git",

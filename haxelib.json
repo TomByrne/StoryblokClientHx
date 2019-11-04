@@ -4,12 +4,12 @@
   "license": "MIT",
   "tags": ["restful", "api"],
   "description": "Storyblok API client in pure Haxe (via REST API). Only tested on JS target at this point.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "releasenote": "Added Travis builds",
   "contributors": ["tbyrne"],
   "classPath":"src",
   "dependencies": {
-	  "promhx": "1.1.0",
-	  "tink_http": "0.8.2"
+	  "promhx": "",
+	  "tink_http": ""
   }
 }
