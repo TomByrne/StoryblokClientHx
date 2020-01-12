@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": ["restful", "api"],
   "description": "Storyblok API client in pure Haxe (via REST API). Only tested on JS target at this point.",
-  "version": "0.2.0",
-  "releasenote": "Added Travis builds",
+  "version": "0.3.0",
+  "releasenote": "Caught JSON parse exceptions",
   "contributors": ["tbyrne"],
   "classPath":"src",
   "dependencies": {

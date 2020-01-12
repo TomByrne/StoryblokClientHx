@@ -69,7 +69,13 @@ class SbHttp
 		.handle(function(o) switch o {
 			case Success(res):
 				var body = res.body.toString();
-				var data:{} = Json.parse(body);
+				var data:{};
+				try{
+					data = Json.parse(body);
+				}catch(e:Dynamic){
+					deferred.throwError(e);
+					return;
+				}
 				if (resProp != null) data = Reflect.field(data, resProp);
 				
 				switch(type){
