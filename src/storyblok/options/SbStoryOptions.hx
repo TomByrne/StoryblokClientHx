@@ -13,8 +13,13 @@ typedef SbStoryOptions =
 	?find_by: StoryFindBy,
 	?version: SbVersion,
 	?cv:Float,
+	?from_release: String,
+
 	?resolve_links:Bool,
 	?resolve_relations:Array<String>,
+	
+	?language: String,
+	?fallback_lang: String,
 }
 
 @:noCompletion

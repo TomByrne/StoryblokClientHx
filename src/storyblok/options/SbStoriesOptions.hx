@@ -28,13 +28,27 @@ typedef SbStoriesOptionsBase =
 	?with_tag: Array<String>,
 	?is_startpage: Bool,
 	?starts_with: String,
-	?by_uuids: Array<SbUUID>,
-	?excluding_ids: Array<SbUUID>,
-	?excluding_fields: Array<String>,
 	?version: SbVersion,
 	?cv:Float,
 	?sort_by:SbSort,
 	?search_term:String,
+	?from_release:String,
+
+	?first_published_at_gt: SbTimestamp,
+	?first_published_at_lt: SbTimestamp,
+	?published_at_gt: SbTimestamp,
+	?published_at_lt: SbTimestamp,
+
+	?by_uuids: Array<SbUUID>,
+	?by_uuids_ordered: Array<SbUUID>,
+	?by_slugs: Array<String>,
+
+	?excluding_ids: Array<SbUUID>,
+	?excluding_fields: Array<String>,
+	?excluding_slugs: Array<String>,
+
+	?fallback_lang: String,
+
 	?resolve_links:Bool,
 	?resolve_relations:Array<String>,
 	?resolve_assets:Bool,
