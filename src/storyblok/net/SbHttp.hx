@@ -19,6 +19,7 @@ class SbHttp
 		
 		var all:SbPage<Dynamic> = {results:[], totalItems:0, totalPages:1, pageSize:0, page:0};
 		
+		if(options == null) options = {};
 		options.page = 1;
 		options.per_page = 100;
 		

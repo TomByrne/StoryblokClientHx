@@ -4,7 +4,7 @@
   "license": "MIT",
   "tags": ["restful", "api"],
   "description": "Storyblok API client in pure Haxe (via REST API). Only tested on JS target at this point.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "releasenote": "Updated arguments to story/stories endpoints.\nAdded extra fields to Space typedef.",
   "contributors": ["tbyrne"],
   "classPath":"src",
